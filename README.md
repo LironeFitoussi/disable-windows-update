@@ -16,6 +16,10 @@ A robust Python-based tool to disable Windows automatic updates through service 
 - **Cross-Platform Safety**: Prevents execution on non-Windows systems
 - **✨ Validation System**: Comprehensive post-execution validation to verify all changes
 - **Standalone Validation**: Check current Windows Update status without making changes
+- **🔄 Rollback Feature**: Complete rollback functionality to re-enable Windows Updates
+- **Safety Confirmation**: User confirmation required for rollback operations
+- **📝 Comprehensive Logging**: Detailed logging with timestamps and multiple log levels
+- **🔍 Verbose Mode**: Optional detailed debug output for troubleshooting
 
 ## 📁 Files Overview
 
@@ -27,16 +31,29 @@ A robust Python-based tool to disable Windows automatic updates through service 
 ## 🚀 Quick Start
 
 ### Method 1: Using the Batch Launcher (Recommended)
+
+**To Disable Windows Updates:**
 1. Download all files to a folder
 2. Right-click on `run_disable_script.bat`
 3. Select "Run as administrator"
 4. Follow the on-screen prompts
 
+**To Re-enable Windows Updates (Rollback):**
+1. Right-click on `run_disable_script.bat`
+2. Select "Run as administrator" 
+3. Or use: `run_disable_script.bat --rollback`
+
 ### Method 2: Direct Python Execution
-1. Ensure Python is installed
-2. Right-click Command Prompt and "Run as administrator"
-3. Navigate to the script directory
-4. Run: `python disable_windows_update.py`
+```bash
+# Disable Windows Updates
+python disable_windows_update.py
+
+# Re-enable Windows Updates (rollback)
+python disable_windows_update.py --rollback
+
+# Check current status
+python disable_windows_update.py --validate
+```
 
 ## 🔧 System Requirements
 
@@ -67,6 +84,15 @@ python disable_windows_update.py
 # Only run validation checks (no changes made)
 python disable_windows_update.py --validate
 
+# Re-enable Windows Updates (complete rollback)
+python disable_windows_update.py --rollback
+
+# Enable verbose logging (detailed debug output)
+python disable_windows_update.py --verbose
+
+# Combine options (verbose rollback)
+python disable_windows_update.py --rollback --verbose
+
 # Show help and usage information
 python disable_windows_update.py --help
 ```
@@ -77,6 +103,14 @@ Use the `--validate` flag to check if Windows Updates are currently disabled wit
 - Verifies registry policy settings  
 - Provides detailed validation report
 - Perfect for verifying the script worked correctly
+
+#### Rollback Mode  
+Use the `--rollback` flag to completely reverse all disable operations and re-enable Windows Updates:
+- Re-enables the Windows Update service (sets to automatic startup)
+- Removes all blocking registry policies
+- Includes user confirmation prompt for safety
+- Comprehensive validation to verify rollback success
+- **Safe and complete**: Fully restores Windows Update functionality
 
 ## 🛠️ Technical Details
 
@@ -124,6 +158,8 @@ Use the `--validate` flag to check if Windows Updates are currently disabled wit
 | `Python installation failed` | Install Python manually or check internet connection |
 | `Service validation failed` | Service may still be running; try restarting as admin |
 | `Registry validation failed` | Registry keys not set correctly; re-run script |
+| `Rollback cancelled by user` | User chose not to proceed with rollback |
+| `Rollback validation failed` | Some rollback operations didn't complete; try again |
 
 ### Validation Troubleshooting
 
@@ -138,9 +174,27 @@ If validation fails after running the script:
 
 **Pro tip**: Use the validation mode regularly to check if Windows Updates are still disabled, especially after Windows feature updates.
 
-## 🔄 Reversing Changes
+## 🔄 Reversing Changes (Rollback)
 
-To re-enable Windows Updates, you need to manually:
+### Automatic Rollback (Recommended)
+The easiest way to re-enable Windows Updates is using the built-in rollback feature:
+
+```bash
+# Using Python directly
+python disable_windows_update.py --rollback
+
+# Using the batch launcher
+run_disable_script.bat --rollback
+```
+
+The rollback feature will:
+- ✅ Re-enable the Windows Update service automatically
+- ✅ Remove all blocking registry policies
+- ✅ Validate that rollback was successful
+- ✅ Provide confirmation prompts for safety
+
+### Manual Rollback (If Needed)
+If you prefer to manually re-enable Windows Updates:
 
 1. **Re-enable the service:**
    ```cmd
@@ -166,6 +220,9 @@ To re-enable Windows Updates, you need to manually:
 - **✨ NEW**: Post-execution validation system
 - **✨ NEW**: Standalone validation mode (`--validate` flag)
 - **✨ NEW**: Detailed validation reports with success/failure indicators
+- **🔄 NEW**: Complete rollback functionality (`--rollback` flag)
+- **🔄 NEW**: Automatic service re-enabling and registry cleanup
+- **🔄 NEW**: Rollback validation and safety confirmations
 
 ## ⚖️ Legal Notice
 
