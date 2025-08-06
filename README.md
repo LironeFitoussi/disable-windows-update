@@ -112,6 +112,14 @@ Use the `--rollback` flag to completely reverse all disable operations and re-en
 - Comprehensive validation to verify rollback success
 - **Safe and complete**: Fully restores Windows Update functionality
 
+#### Verbose Logging Mode
+Use the `--verbose` or `-v` flag to enable detailed debug logging:
+- **Detailed execution logs**: Shows every step the script performs
+- **Debug information**: Command outputs, registry operations, service calls
+- **Automatic log files**: Saves timestamped logs to `logs/` directory
+- **Troubleshooting**: Perfect for diagnosing issues or understanding what went wrong
+- **Combine with any mode**: Works with disable, rollback, and validation modes
+
 ## 🛠️ Technical Details
 
 ### Registry Keys Modified
@@ -124,6 +132,32 @@ Use the `--rollback` flag to completely reverse all disable operations and re-en
 ### Services Modified
 
 - **wuauserv** (Windows Update Service) - Stopped and set to disabled
+
+### Logging System
+
+The script includes comprehensive logging functionality:
+
+#### **Log Files**
+- **Location**: `logs/` directory (created automatically)
+- **Naming**: `windows_update_disabler_YYYYMMDD_HHMMSS.log`
+- **Format**: Timestamp - Level - Function:Line - Message
+- **Encoding**: UTF-8 for proper character support
+
+#### **Log Levels**
+- **INFO**: General operation status and progress
+- **DEBUG**: Detailed command execution and system calls (verbose mode only)
+- **WARNING**: Non-critical issues that don't stop execution
+- **ERROR**: Failures and critical issues with full exception details
+
+#### **Example Log Output**
+```
+2024-01-15 14:30:15,123 - INFO - main:534 - === STARTING WINDOWS UPDATE DISABLE OPERATION ===
+2024-01-15 14:30:15,125 - INFO - is_admin:64 - Administrator check result: True
+2024-01-15 14:30:15,126 - INFO - main:549 - Phase 1: Disabling Windows Update service
+2024-01-15 14:30:15,127 - DEBUG - disable_windows_update_service:86 - Executing: sc stop wuauserv
+2024-01-15 14:30:15,234 - DEBUG - disable_windows_update_service:89 - Stop service result - Return code: 0
+2024-01-15 14:30:15,235 - INFO - disable_windows_update_service:112 - Service disabled successfully
+```
 
 ## 🔒 Security Considerations
 
@@ -223,6 +257,9 @@ If you prefer to manually re-enable Windows Updates:
 - **🔄 NEW**: Complete rollback functionality (`--rollback` flag)
 - **🔄 NEW**: Automatic service re-enabling and registry cleanup
 - **🔄 NEW**: Rollback validation and safety confirmations
+- **📝 NEW**: Comprehensive logging system with timestamped log files
+- **📝 NEW**: Verbose mode (`--verbose`/`-v`) for detailed debug output
+- **📝 NEW**: Automatic log file generation in `logs/` directory
 
 ## ⚖️ Legal Notice
 
