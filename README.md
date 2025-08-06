@@ -14,6 +14,8 @@ A robust Python-based tool to disable Windows automatic updates through service 
 - **Administrator Privilege Check**: Ensures script runs with required permissions
 - **Comprehensive Error Handling**: Robust error checking and user feedback
 - **Cross-Platform Safety**: Prevents execution on non-Windows systems
+- **✨ Validation System**: Comprehensive post-execution validation to verify all changes
+- **Standalone Validation**: Check current Windows Update status without making changes
 
 ## 📁 Files Overview
 
@@ -56,12 +58,25 @@ A robust Python-based tool to disable Windows automatic updates through service 
 
 ### Command Line Options
 
-The Python script currently doesn't accept command-line arguments, but you can run it directly:
+The Python script supports several command-line options:
 
 ```bash
-# Run with Python (requires admin privileges)
+# Disable Windows Updates (default behavior)
 python disable_windows_update.py
+
+# Only run validation checks (no changes made)
+python disable_windows_update.py --validate
+
+# Show help and usage information
+python disable_windows_update.py --help
 ```
+
+#### Validation Mode
+Use the `--validate` flag to check if Windows Updates are currently disabled without making any changes:
+- Checks Windows Update service status
+- Verifies registry policy settings  
+- Provides detailed validation report
+- Perfect for verifying the script worked correctly
 
 ## 🛠️ Technical Details
 
@@ -107,6 +122,21 @@ python disable_windows_update.py
 | `This script only works on Windows systems` | Only run on Windows machines |
 | `Permission denied while writing to registry` | Ensure admin privileges and check antivirus |
 | `Python installation failed` | Install Python manually or check internet connection |
+| `Service validation failed` | Service may still be running; try restarting as admin |
+| `Registry validation failed` | Registry keys not set correctly; re-run script |
+
+### Validation Troubleshooting
+
+If validation fails after running the script:
+
+1. **Check the detailed validation report** - it shows exactly what failed
+2. **Run validation separately**: `python disable_windows_update.py --validate`
+3. **Common validation issues**:
+   - Service still running: Windows may have restarted the service
+   - Registry keys missing: Antivirus may have blocked registry changes
+   - Partial success: Some operations succeeded, others failed
+
+**Pro tip**: Use the validation mode regularly to check if Windows Updates are still disabled, especially after Windows feature updates.
 
 ## 🔄 Reversing Changes
 
@@ -133,6 +163,9 @@ To re-enable Windows Updates, you need to manually:
 - Added platform compatibility checks
 - Robust Python auto-installation
 - Comprehensive logging and status reporting
+- **✨ NEW**: Post-execution validation system
+- **✨ NEW**: Standalone validation mode (`--validate` flag)
+- **✨ NEW**: Detailed validation reports with success/failure indicators
 
 ## ⚖️ Legal Notice
 
